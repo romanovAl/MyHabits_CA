@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_navigation_graph"
+    app:startDestination="@id/mainFragment3">
+
+    <fragment
+        android:id="@+id/mainFragment3"
+        android:name="ru.romanoval.myhabits_ca_modules.ui.fragments.MainFragment"
+        android:label="My habits"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment3_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_mainFragment3_to_addEditFragment"
+            app:destination="@id/addEditFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ru.romanoval.myhabits_ca_modules.ui.fragments.AboutFragment"
+        android:label="О приложении"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/addEditFragment"
+        android:name="ru.romanoval.myhabits_ca_modules.ui.fragments.AddEditFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_edit">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="habitToEdit"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="ru.romanoval.domain.model.Habit" />
+    </fragment>
+</navigation>

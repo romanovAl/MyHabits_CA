@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">My Habits</string>
+    <string name="find_and_sort">Find and sort</string>
+    <string name="filter_type">Filter type</string>
+    <string name="search">Search</string>
+    <string name="app_my_habits">Application \"My Habits\"</string>
+    <string name="author_alex_romanov">Author - Alex Romanov</string>
+    <string name="github" translatable="false">GitHub - https://github.com/romanovAl</string>
+    <string name="email">Email - ml.naslednik2001@gmail.com</string>
+    <string name="telegram" translatable="false">Telegram - @romanovvAl</string>
+    <string name="habit_name">Habit name</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+    <string name="good_habit">Good</string>
+    <string name="bad_habit">Bad</string>
+    <string name="period">Period</string>
+    <string name="Count">Count</string>
+    <string name="period_is_not_chosen">Period is not selected</string>
+    <string name="priority_is_not_chosen">Priority is not selected</string>
+    <string name="times">times</string>
+    <string name="by_priority">By priority</string>
+    <string name="by_period">By period</string>
+    <string name="by_quantity">By quantity</string>
+    <string name="by_date">By date</string>
+    <string name="without_filter">Without filter</string>
+    <string name="high_priorirty">High</string>
+    <string name="medium_priority">Medium</string>
+    <string name="low_priority">Low</string>
+    <string name="period_anhour">per hour</string>
+    <string name="period_aday">per day</string>
+    <string name="period_aweek">per week</string>
+    <string name="period_amonth">per month</string>
+    <string name="period_anyear">per year</string>
+    <string name="label_edit">Editing habit</string>
+    <string name="label_add">Adding habit</string>
+    <string name="view_pager_good">Good Habits</string>
+    <string name="view_pager_bad">Bad habits</string>
+    <string name="delete_habit">delete habit</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete habit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="upload_to_api">Upload to server</string>
+    <string name="download_from_api">Download from server</string>
+</resources>

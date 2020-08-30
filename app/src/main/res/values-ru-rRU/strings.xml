@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мои привычки</string>
+    <string name="find_and_sort" translatable="false">Поиск и сортировка</string>
+    <string name="filter_type">Тип фильтра</string>
+    <string name="search">Найти</string>
+    <string name="app_my_habits">Приложение \"Мои привычки\"</string>
+    <string name="author_alex_romanov">Автор - Александр Романов</string>
+    <string name="email">Почта - ml.naslednik2001@gmail.com</string>
+    <string name="habit_name">Название привычки</string>
+    <string name="description">Описание</string>
+    <string name="priority">Приоритет</string>
+    <string name="good_habit">Хорошая</string>
+    <string name="bad_habit">Плохая</string>
+    <string name="period">Периодичность</string>
+    <string name="Count">Количество</string>
+    <string name="period_is_not_chosen">Период не выбран</string>
+    <string name="priority_is_not_chosen">Приоритет не выбран</string>
+    <string name="times">раз(а)</string>
+    <string name="by_priority">По приоритету</string>
+    <string name="by_period">По периоду</string>
+    <string name="by_quantity">По количеству</string>
+    <string name="without_filter">Без фильтра</string>
+    <string name="high_priorirty">Высокий</string>
+    <string name="medium_priority">Средний</string>
+    <string name="low_priority">Низкий</string>
+    <string name="period_anhour">в час</string>
+    <string name="period_aday">в день</string>
+    <string name="period_aweek">в неделю</string>
+    <string name="period_amonth">в месяц</string>
+    <string name="period_anyear">в год</string>
+    <string name="label_edit">Редактирование привычки</string>
+    <string name="label_add">Добавление привычки</string>
+    <string name="view_pager_good">Хорошие привычки</string>
+    <string name="view_pager_bad">Плохие привычки</string>
+    <string name="delete_habit">Удалить привычку</string>
+    <string name="no_internet_connection">Отсутсвует соединение с интернетом!</string>
+    <string name="are_you_sure_you_want_to_delete">Вы уверены что хотите удалить привычку</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="upload_to_api">Выгрузить на сервер</string>
+    <string name="download_from_api">Загрузить с сервера</string>
+    <string name="by_date">По дате добавления</string>
+</resources>
