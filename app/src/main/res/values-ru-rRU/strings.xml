@@ -9,7 +9,7 @@
     <string name="email">Почта - ml.naslednik2001@gmail.com</string>
     <string name="habit_name">Название привычки</string>
     <string name="description">Описание</string>
-    <string name="priority">Приоритет</string>
+    <string name="priority">приоритет</string>
     <string name="good_habit">Хорошая</string>
     <string name="bad_habit">Плохая</string>
     <string name="period">Периодичность</string>
@@ -41,4 +41,8 @@
     <string name="upload_to_api">Выгрузить на сервер</string>
     <string name="download_from_api">Загрузить с сервера</string>
     <string name="by_date">По дате добавления</string>
+    <string name="Field_must_not_be_empty">Поле не должно быть пустым</string>
+    <string name="deleting_habbit">Удаление привычки</string>
+    <string name="done">Я сделяль</string>
+    <string name="You_should_do_this_habbit_toast">Вам стоит выполнить эту привычку еще</string>
 </resources>

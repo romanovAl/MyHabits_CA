@@ -17,13 +17,14 @@ class GoodHabitsViewModel @Inject constructor(
     private val updateHabitUseCase: UpdateHabitDBUseCase
 ) : ViewModel() {
 
-    var habits: LiveData<List<Habit>> = getGoodHabitsFromDbUseCase.getGoodHabits().asLiveData()
+    var habits: LiveData<List<Habit>>? = getGoodHabitsFromDbUseCase?.getGoodHabits()?.asLiveData()
 
-    var sortedHabits: LiveData<List<Habit>> = getSortedHabitsUseCase.getSortedHabits().asLiveData()
+    var sortedHabits: LiveData<List<Habit>>? = getSortedHabitsUseCase?.getSortedHabits()?.asLiveData()
 
     val message: MutableLiveData<String> = MutableLiveData()
 
     val messageWithUndo: MutableLiveData<String> = MutableLiveData()
+
 
 
     fun addDoneTimes(habit: Habit, periods: List<String>) {
@@ -116,6 +117,8 @@ class GoodHabitsViewModel @Inject constructor(
         messageWithUndo.value = null
 
     }
+
+    //TODO в стринги это надо
 
 
 }

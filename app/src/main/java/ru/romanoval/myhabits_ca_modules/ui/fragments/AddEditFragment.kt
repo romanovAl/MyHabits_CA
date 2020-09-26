@@ -3,14 +3,20 @@ package ru.romanoval.myhabits_ca_modules.ui.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_edit.*
 import ru.romanoval.domain.model.Habit
@@ -23,12 +29,12 @@ import javax.inject.Inject
 class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
 
     @Inject
-    lateinit var viewModelFactory : ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: AddEditViewModel
-    private lateinit var priorities : List<String>
+    private lateinit var priorities: List<String>
     private lateinit var periods: List<String>
 
-    companion object{
+    companion object {
         @JvmStatic
         fun newInstance() = AddEditFragment()
     }
@@ -43,21 +49,20 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
         priorities = Lists.getPriorities(requireContext())
         periods = Lists.getPeriods(requireContext())
 
-        if(habitToEdit == null){
+        if (habitToEdit == null) {
             initAdding()
-        }
-        else{
+        } else {
             initEditing(habitToEdit)
         }
 
     }
 
-    private fun initAdding(){
+    private fun initAdding() {
         init()
 
         addAndEditFab.setOnClickListener {
 
-            if(canAddOrEdit()) {
+            if (canAddOrEdit()) {
                 val newHabit = Habit(
                     uid = null,
                     bdId = null,
@@ -94,11 +99,11 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
         }
     }
 
-    private fun initEditing(habitToEdit: Habit){
+    private fun initEditing(habitToEdit: Habit) {
         addAndEditFab.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_check_24))
 
         habitPriorityAddAndEdit(
-            when(habitToEdit.priority){
+            when (habitToEdit.priority) {
                 2 -> priorities[2]
                 1 -> priorities[1]
                 else -> priorities[0]
@@ -132,38 +137,43 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
         initDeleteButton(habitToEdit)
 
         addAndEditFab.setOnClickListener {
-            val newHabit = Habit(
-                uid = habitToEdit.uid,
-                bdId = habitToEdit.bdId,
-                title = habitNameAddAndEdit.text.toString(),
-                description = habitDescriptionAddAndEdit.text.toString(),
-                priority = when (habitPriorityAddAndEdit.text.toString()) {
-                    priorities[2] -> 2
-                    priorities[1] -> 1
-                    else -> 0
-                },
-                type = radioButtonGood.isChecked.toInt(),
-                count = if(habitDoneAddEdit.text.toString() == ""){
-                    0
-                }else{
-                    habitDoneAddEdit.text.toString().toInt()
-                },
-                frequency = when (habitPeriodAddAndEdit.text.toString()) {
-                    periods[0] -> 0
-                    periods[1] -> 1
-                    periods[2] -> 2
-                    periods[3] -> 3
-                    periods[4] -> 4
-                    else -> 2
-                },
-                color = 234,
-                date = habitToEdit.date,
-                done_dates = habitToEdit.done_dates
-            )
 
-            viewModel.updateHabit(newHabit)
-            it.hideKeyboard()
-            Navigation.findNavController(it).popBackStack()
+            if (canAddOrEdit()) {
+                val newHabit = Habit(
+                    uid = habitToEdit.uid,
+                    bdId = habitToEdit.bdId,
+                    title = habitNameAddAndEdit.text.toString(),
+                    description = habitDescriptionAddAndEdit.text.toString(),
+                    priority = when (habitPriorityAddAndEdit.text.toString()) {
+                        priorities[2] -> 2
+                        priorities[1] -> 1
+                        else -> 0
+                    },
+                    type = radioButtonGood.isChecked.toInt(),
+                    count = if (habitDoneAddEdit.text.toString() == "") {
+                        0
+                    } else {
+                        habitDoneAddEdit.text.toString().toInt()
+                    },
+                    frequency = when (habitPeriodAddAndEdit.text.toString()) {
+                        periods[0] -> 0
+                        periods[1] -> 1
+                        periods[2] -> 2
+                        periods[3] -> 3
+                        periods[4] -> 4
+                        else -> 2
+                    },
+                    color = 234,
+                    date = habitToEdit.date,
+                    done_dates = habitToEdit.done_dates
+                )
+
+                viewModel.updateHabit(newHabit)
+                it.hideKeyboard()
+                Navigation.findNavController(it).popBackStack()
+            }
+
+
         }
 
 
@@ -183,47 +193,49 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
         habitPeriodAddAndEdit.keyListener = null
 
         addAndEditFab.setColorFilter(Color.argb(255, 255, 255, 255))
+
     }
-    
-    private fun canAddOrEdit() : Boolean{
+
+    private fun canAddOrEdit(): Boolean {
         var isAble = true
-        if(habitNameAddAndEdit.text?.length?.compareTo(0) == 0){
-            habitNameInputLayout.error = "Must not be empty"
+        if (habitNameAddAndEdit.text?.length?.compareTo(0) == 0) {
+            habitNameInputLayout.error = resources.getString(R.string.Field_must_not_be_empty)
             isAble = false
-        }else{
+        } else {
             habitNameInputLayout.error = ""
         }
-        if(habitDescriptionAddAndEdit.text?.length?.compareTo(0) == 0){
-            habitDescriptionInputLayout.error = "Must not be empty"
+        if (habitDescriptionAddAndEdit.text?.length?.compareTo(0) == 0) {
+            habitDescriptionInputLayout.error =
+                resources.getString(R.string.Field_must_not_be_empty)
             isAble = false
-        }else{
+        } else {
             habitDescriptionInputLayout.error = ""
         }
-        if(habitPeriodAddAndEdit.text?.length?.compareTo(0) == 0){
-            habitPeriodInputLayout.error = "Must not be empty"
+        if (habitPeriodAddAndEdit.text?.length?.compareTo(0) == 0) {
+            habitPeriodInputLayout.error = resources.getString(R.string.Field_must_not_be_empty)
             isAble = false
-        }else{
+        } else {
             habitPeriodInputLayout.error = ""
         }
         return isAble
     }
 
-    private fun initDeleteButton(habit: Habit){
+    private fun initDeleteButton(habit: Habit) {
 
         deleteButton.visibility = View.VISIBLE
 
-        deleteButton.setOnClickListener{
+        deleteButton.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Удаление привычки")
+            builder.setTitle(resources.getString(R.string.deleting_habbit))
 
             builder.setMessage("""${resources.getString(R.string.are_you_sure_you_want_to_delete)} "${habit.title}" ? """)
 
-            builder.setPositiveButton(resources.getString(R.string.yes)){ _, _ ->
+            builder.setPositiveButton(resources.getString(R.string.yes)) { _, _ ->
                 viewModel.deleteHabit(habit)
                 Navigation.findNavController(requireView()).popBackStack()
             }
 
-            builder.setNeutralButton(resources.getString(R.string.no)){_,_ ->}
+            builder.setNeutralButton(resources.getString(R.string.no)) { _, _ -> }
 
             val dialog = builder.create()
             dialog.show()
@@ -242,6 +254,7 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
     private fun Int.toBoolean(): Boolean {
         return this == 1
     }
+
     private fun Boolean.toInt() = if (this) 1 else 0
 
 }

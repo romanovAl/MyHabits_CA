@@ -9,21 +9,32 @@
     app:behavior_hideable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <TextView
-        android:id="@+id/findAndSortTextView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryCustom"
-        android:fontFamily="@font/roboto_mono"
-        android:padding="16dp"
-        android:text="@string/find_and_sort"
-        android:textAlignment="textStart"
-        android:textColor="@android:color/primary_text_dark"
-        android:textSize="20sp"
+        app:cardBackgroundColor="@color/colorPrimaryCustom"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="4dp"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/findAndSortTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono"
+            android:padding="16dp"
+            android:text="@string/find_and_sort"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="20sp" />
+
+    </androidx.cardview.widget.CardView>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filterInputLayout"
@@ -36,7 +47,7 @@
         android:hint="@string/filter_type"
         app:layout_constraintEnd_toStartOf="@+id/filterSortDown"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findAndSortTextView">
+        app:layout_constraintTop_toBottomOf="@+id/card">
 
         <AutoCompleteTextView
             android:id="@+id/filterTypeSpinner"

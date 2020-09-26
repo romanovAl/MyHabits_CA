@@ -1,6 +1,7 @@
 package ru.romanoval.data.source.cloud
 
-import ru.romanoval.domain.model.Habit
+import ru.romanoval.data.model.Habit
+
 
 interface BaseCloudRepository {
 

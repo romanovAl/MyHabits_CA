@@ -37,7 +37,7 @@
         <argument
             android:name="habitToEdit"
             app:nullable="true"
-            android:defaultValue="@null"
-            app:argType="ru.romanoval.domain.model.Habit" />
+            app:argType="ru.romanoval.domain.model.Habit"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

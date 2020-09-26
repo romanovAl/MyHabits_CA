@@ -1,7 +1,8 @@
 package ru.romanoval.data.restful
 
 import retrofit2.http.*
-import ru.romanoval.domain.model.Habit
+import ru.romanoval.data.model.Habit
+
 import ru.romanoval.domain.model.PostDone
 import ru.romanoval.domain.model.Uid
 

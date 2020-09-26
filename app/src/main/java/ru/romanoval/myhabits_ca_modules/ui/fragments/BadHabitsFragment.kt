@@ -16,8 +16,6 @@ import javax.inject.Inject
 
 class BadHabitsFragment : DaggerFragment(R.layout.fragment_bad_habits) {
 
-
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: BadHabitsViewModel

@@ -152,7 +152,7 @@ class MainFragment : DaggerFragment(R.layout.fragment_main) {
 
         viewModel.setSortedHabits(emptyList())
 
-        viewModel.habits.observe(viewLifecycleOwner, Observer {
+        viewModel.habits?.observe(viewLifecycleOwner, Observer {
             sortedHabits = it
             currentSortedHabits = it
         })
@@ -186,7 +186,7 @@ class MainFragment : DaggerFragment(R.layout.fragment_main) {
         })
 
 
-        findAndSortTextView.setOnClickListener {
+        card.setOnClickListener {
             if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }

@@ -7,19 +7,19 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.romanoval.data.model.Habit
 import ru.romanoval.data.restful.ApiService
 import ru.romanoval.data.source.cloud.BaseCloudRepository
 import ru.romanoval.data.source.cloud.CloudRepository
-import ru.romanoval.domain.model.Habit
 import ru.romanoval.myhabits_ca_modules.core.Config
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-class NetworkModule {
+open class NetworkModule {
     @Provides
     @Singleton
-    fun providesRetrofit(
+    open fun providesRetrofit(
         gsonConverterFactory: GsonConverterFactory,
         okHttpClient: OkHttpClient
     ) : Retrofit{
@@ -32,7 +32,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(): OkHttpClient{
+    open fun providesOkHttpClient(): OkHttpClient{
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
@@ -42,7 +42,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesGson(): Gson{
+    open fun providesGson(): Gson{
         return GsonBuilder()
             .registerTypeAdapter(
                 Habit::class.java,
@@ -57,18 +57,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesGsonConverterFactory(gson: Gson): GsonConverterFactory{
+    open fun providesGsonConverterFactory(gson: Gson): GsonConverterFactory{
         return GsonConverterFactory.create(gson)
     }
 
     @Singleton
     @Provides
-    fun provideService(retrofit: Retrofit) : ApiService{
+    open fun provideService(retrofit: Retrofit) : ApiService{
         return retrofit.create(ApiService::class.java)
     }
 
     @Provides
-    fun provideCloudRepository(service: ApiService): BaseCloudRepository{
+    open fun provideCloudRepository(service: ApiService): BaseCloudRepository{
         return CloudRepository(service)
     }
 

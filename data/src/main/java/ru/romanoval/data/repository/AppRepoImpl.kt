@@ -1,9 +1,9 @@
 package ru.romanoval.data.repository
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
+import ru.romanoval.data.mapper.HabitMapper
 import ru.romanoval.data.source.cloud.BaseCloudRepository
 import ru.romanoval.data.source.db.HabitsDao
 import ru.romanoval.data.source.tempSort.SortedHabits
@@ -15,41 +15,51 @@ class AppRepoImpl @Inject constructor(
     private val cloudRepository: BaseCloudRepository,
     private val habitsDao: HabitsDao,
     private val sortedHabits: SortedHabits
-) : AppRepository{
+) : AppRepository {
+
+    private var habitMapper = HabitMapper()
 
     //--------------DATABASE--------------------
-    override fun selectAllHabits(): Flow<List<Habit>> {
-        return habitsDao.selectAllHabits()
+    override fun selectAllHabits(): Flow<List<Habit>> = habitsDao.selectAllHabits().map {
+        it.map { habitDB ->
+            habitMapper.habitDataToHabitDomain(habitDB)
+        }
     }
 
-    override fun selectGoodHabitsFromDb(): Flow<List<Habit>> {
-        return habitsDao.selectGoodHabits()
+    override fun selectGoodHabitsFromDb(): Flow<List<Habit>> = habitsDao.selectGoodHabits().map {
+        it.map { habitDB ->
+            habitMapper.habitDataToHabitDomain(habitDB)
+        }
     }
 
-    override fun selectBadHabitsFromDb(): Flow<List<Habit>> {
-        return habitsDao.selectBadHabits()
+    override fun selectBadHabitsFromDb(): Flow<List<Habit>> = habitsDao.selectBadHabits().map {
+        it.map { habitDB ->
+            habitMapper.habitDataToHabitDomain(habitDB)
+        }
     }
 
     override suspend fun insertHabits(habits: List<Habit>) {
-        if(habits.isNotEmpty()){
-            habits.forEach {
+        if (habits.isNotEmpty()) {
+            val habitsData = habits.map {
+                habitMapper.habitDomainToHabitData(it)
+            }
+            habitsData.forEach {
                 habitsDao.insertHabit(it)
             }
         }
         return
     }
 
-    override suspend fun insertHabit(habit: Habit) {
-        habitsDao.insertHabit(habit)
-    }
+    override suspend fun insertHabit(habit: Habit) =
+        habitsDao.insertHabit(habitMapper.habitDomainToHabitData(habit))
 
-    override suspend fun updateHabit(habit: Habit) {
-        habitsDao.updateHabit(habit)
-    }
 
-    override suspend fun deleteHabit(habit: Habit) {
-        habitsDao.deleteHabit(habit)
-    }
+    override suspend fun updateHabit(habit: Habit) =
+        habitsDao.updateHabit(habitMapper.habitDomainToHabitData(habit))
+
+    override suspend fun deleteHabit(habit: Habit) =
+        habitsDao.deleteHabit(habitMapper.habitDomainToHabitData(habit))
+
 
     override suspend fun deleteAllHabitsFromDb() {
         habitsDao.deleteAllHabits()
@@ -58,31 +68,42 @@ class AppRepoImpl @Inject constructor(
 
     //-----------------API---------------------
     override suspend fun getHabitsFromApi(): List<Habit> {
-        return cloudRepository.getAllHabits()
+        var habits = cloudRepository.getAllHabits().map {
+            habitMapper.habitDataToHabitDomain(it)
+        }
+        return habits
     }
 
-    override suspend fun deleteHabitInApi(habit: Habit) {
-        return cloudRepository.deleteHabit(habit)
-    }
 
-    override suspend fun deleteHabitsInApi(habits: List<Habit>) {
-        return cloudRepository.deleteHabits(habits)
-    }
+    override suspend fun deleteHabitInApi(habit: Habit) =
+        cloudRepository.deleteHabit(habitMapper.habitDomainToHabitData(habit))
 
-    override suspend fun putHabitsInApi(habits: List<Habit>) {
-        return cloudRepository.putHabits(habits)
-    }
+    override suspend fun deleteHabitsInApi(habits: List<Habit>) =
+        cloudRepository.deleteHabits(habits.map {
+            habitMapper.habitDomainToHabitData(it)
+        })
 
-    override suspend fun putHabitInApi(habit: Habit) {
-        return cloudRepository.putHabit(habit)
-    }
+
+    override suspend fun putHabitsInApi(habits: List<Habit>) =
+        cloudRepository.putHabits(habits.map {
+            habitMapper.habitDomainToHabitData(it)
+        })
+
+
+    override suspend fun putHabitInApi(habit: Habit) =
+        cloudRepository.putHabit(habitMapper.habitDomainToHabitData(habit))
+
 
     override suspend fun postHabitsDoneInApi(
         habitsFromApi: List<Habit>,
         habitsFromDb: List<Habit>
-    ) {
-        return cloudRepository.postHabitsDone(habitsFromApi, habitsFromDb)
-    }
+    ) =
+        cloudRepository.postHabitsDone(habitsFromApi.map {
+            habitMapper.habitDomainToHabitData(it)
+        }, habitsFromDb.map {
+            habitMapper.habitDomainToHabitData(it)
+        })
+
     //-----------------API---------------------
 
     //----------------SORTED-------------------

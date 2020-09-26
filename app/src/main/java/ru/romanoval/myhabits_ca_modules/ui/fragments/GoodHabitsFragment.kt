@@ -53,9 +53,9 @@ class GoodHabitsFragment : DaggerFragment(R.layout.fragment_good_habits) {
         }
         recyclerGoodHabits.adapter = adapter
 
-        viewModel.sortedHabits.observe(viewLifecycleOwner, Observer{sortedHabits ->
+        viewModel.sortedHabits?.observe(viewLifecycleOwner, Observer{sortedHabits ->
 
-            viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
+            viewModel.habits?.observe(viewLifecycleOwner, Observer { habits ->
 
                 if(sortedHabits.isNotEmpty()){
                     adapter.updateHabits(sortedHabits.filter { it.type.toBoolean() })

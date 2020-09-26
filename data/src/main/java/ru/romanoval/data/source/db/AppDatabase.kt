@@ -3,7 +3,7 @@ package ru.romanoval.data.source.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ru.romanoval.domain.model.Habit
+import ru.romanoval.data.model.Habit
 
 @Database(entities = [Habit::class], version = AppDatabase.VERSION)
 @TypeConverters(Habit.ListConverter::class)

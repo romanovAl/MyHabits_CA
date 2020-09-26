@@ -2,7 +2,7 @@ package ru.romanoval.data.source.db
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import ru.romanoval.domain.model.Habit
+import ru.romanoval.data.model.Habit
 
 @Dao
 interface HabitsDao {

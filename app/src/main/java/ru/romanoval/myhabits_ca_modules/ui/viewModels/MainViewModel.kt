@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
 
     val error: MutableLiveData<ErrorModel> by lazy { MutableLiveData<ErrorModel>() }
     val isLoading: MutableLiveData<Boolean> by lazy{ MutableLiveData<Boolean>() }
-    val habits : LiveData<List<Habit>> = getHabitsUseCase.getHabits().asLiveData()
+    val habits : LiveData<List<Habit>>? = getHabitsUseCase.getHabits()?.asLiveData()
 
     val isSorted = false
 
@@ -49,13 +49,13 @@ class MainViewModel @Inject constructor(
                 deleteHabitsInApiUseCase.habits = habitsFromApi
                 deleteHabitsInApiUseCase.execute {
                     onComplete {
-                        putHabitsInApiUseCase.habits = habits.value ?: emptyList()
+                        putHabitsInApiUseCase.habits = habits?.value ?: emptyList()
                         putHabitsInApiUseCase.execute {
                             onComplete {
                                 getHabitsFromApiUseCase.execute {
                                     onComplete {
                                         postHabitsDoneUseCase.habitsFromApi = it
-                                        postHabitsDoneUseCase.habitsFromDb = habits.value ?: emptyList()
+                                        postHabitsDoneUseCase.habitsFromDb = habits?.value ?: emptyList()
                                         postHabitsDoneUseCase.execute {
                                             onComplete {
                                                 isLoading.value = false

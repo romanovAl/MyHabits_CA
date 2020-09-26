@@ -1,11 +1,12 @@
 package ru.romanoval.data.source.cloud
 
+import ru.romanoval.data.model.Habit
 import ru.romanoval.data.restful.ApiService
-import ru.romanoval.domain.model.Habit
 import ru.romanoval.domain.model.PostDone
 import ru.romanoval.domain.model.Uid
 
 class CloudRepository(private val service: ApiService) : BaseCloudRepository {
+
     override suspend fun getAllHabits(): List<Habit> {
         return service.getHabits(
             "application/json",
@@ -46,16 +47,17 @@ class CloudRepository(private val service: ApiService) : BaseCloudRepository {
     }
 
     override suspend fun putHabits(habits: List<Habit>) {
-        return habits.forEach {
-            it.uid = null
-            service
-                .putHabit(
-                    "application/json",
-                    "5cbb174f-cd85-4ad0-91d4-93be374c9883",
-                    "application/json",
-                    it
-                )
-        }
+        return habits
+            .forEach {
+                it.uid = null
+                service
+                    .putHabit(
+                        "application/json",
+                        "5cbb174f-cd85-4ad0-91d4-93be374c9883",
+                        "application/json",
+                        it
+                    )
+            }
     }
 
     override suspend fun postHabitsDone(habitsFromApi: List<Habit>, habitsFromDb: List<Habit>) {
