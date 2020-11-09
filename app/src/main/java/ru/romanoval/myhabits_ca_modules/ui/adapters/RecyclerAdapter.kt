@@ -18,8 +18,8 @@ import javax.inject.Inject
 class RecyclerAdapter(private var habits: List<Habit>, var context: Context, val adapterOnClickAdd: (Habit) -> Unit    ) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
 
-    private val priorities = Lists.getPriorities(context)
-    private val periods = Lists.getPeriods(context)
+    private val priorities = context.resources.getStringArray(R.array.priorities)
+    private val periods = context.resources.getStringArray(R.array.periods)
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -45,9 +45,7 @@ class RecyclerAdapter(private var habits: List<Habit>, var context: Context, val
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(habit: Habit, position: Int){
-
-
-
+            
             containerView.run {
                 constraintMainRecyclerElement.setOnClickListener {
                     val action = MainFragmentDirections.actionMainFragment3ToAddEditFragment(

@@ -46,8 +46,8 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
 
         val habitToEdit = AddEditFragmentArgs.fromBundle(requireArguments()).habitToEdit
 
-        priorities = Lists.getPriorities(requireContext())
-        periods = Lists.getPeriods(requireContext())
+        priorities = resources.getStringArray(R.array.priorities).toList()
+        periods = resources.getStringArray(R.array.periods).toList()
 
         if (habitToEdit == null) {
             initAdding()
@@ -68,10 +68,10 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
                     bdId = null,
                     title = habitNameAddAndEdit.text.toString(),
                     description = habitDescriptionAddAndEdit.text.toString(),
-                    priority = when (habitPriorityAddAndEdit.text.toString()) {
-                        priorities[2] -> 2
-                        priorities[1] -> 1
-                        else -> 0
+                    priority = if (habitPriorityAddAndEdit.text.toString().isNotEmpty()) {
+                        priorities.indexOf(habitPriorityAddAndEdit.text.toString())
+                    } else {
+                        0
                     },
                     type = radioButtonGood.isChecked.toInt(),
                     count = if (habitDoneAddEdit.text.toString() == "") {
@@ -79,13 +79,10 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
                     } else {
                         habitDoneAddEdit.text.toString().toInt()
                     },
-                    frequency = when (habitPeriodAddAndEdit.text.toString()) {
-                        periods[0] -> 0
-                        periods[1] -> 1
-                        periods[2] -> 2
-                        periods[3] -> 3
-                        periods[4] -> 4
-                        else -> 2
+                    frequency = if (habitPeriodAddAndEdit.text.toString().isNotEmpty()) {
+                        periods.indexOf(habitPeriodAddAndEdit.text.toString())
+                    } else {
+                        2
                     },
                     color = 234,
                     date = Calendar.getInstance().time.time,
@@ -103,23 +100,11 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
         addAndEditFab.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_check_24))
 
         habitPriorityAddAndEdit(
-            when (habitToEdit.priority) {
-                2 -> priorities[2]
-                1 -> priorities[1]
-                else -> priorities[0]
-            }
+            priorities[habitToEdit.priority]
         )
 
         habitPeriodAddAndEdit(
-            when (habitToEdit.frequency) {
-                0 -> periods[0]
-                1 -> periods[1]
-                2 -> periods[2]
-                3 -> periods[3]
-                4 -> periods[4]
-                5 -> periods[5]
-                else -> ""
-            }
+            periods[habitToEdit.frequency]
         )
 
         habitNameAddAndEdit.setText(habitToEdit.title)
@@ -144,10 +129,10 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
                     bdId = habitToEdit.bdId,
                     title = habitNameAddAndEdit.text.toString(),
                     description = habitDescriptionAddAndEdit.text.toString(),
-                    priority = when (habitPriorityAddAndEdit.text.toString()) {
-                        priorities[2] -> 2
-                        priorities[1] -> 1
-                        else -> 0
+                    priority = if(habitPriorityAddAndEdit.text.toString().isNotEmpty()){
+                        priorities.indexOf(habitPriorityAddAndEdit.text.toString())
+                    }else{
+                        0
                     },
                     type = radioButtonGood.isChecked.toInt(),
                     count = if (habitDoneAddEdit.text.toString() == "") {
@@ -155,13 +140,10 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
                     } else {
                         habitDoneAddEdit.text.toString().toInt()
                     },
-                    frequency = when (habitPeriodAddAndEdit.text.toString()) {
-                        periods[0] -> 0
-                        periods[1] -> 1
-                        periods[2] -> 2
-                        periods[3] -> 3
-                        periods[4] -> 4
-                        else -> 2
+                    frequency = if (habitPeriodAddAndEdit.text.toString().isNotEmpty()) {
+                        periods.indexOf(habitPeriodAddAndEdit.text.toString())
+                    } else {
+                        2
                     },
                     color = 234,
                     date = habitToEdit.date,
@@ -180,9 +162,6 @@ class AddEditFragment : DaggerFragment(R.layout.fragment_add_edit) {
     }
 
     private fun init() {
-
-        val priorities = Lists.getPriorities(requireContext())
-        val periods = Lists.getPeriods(requireContext())
 
         val adapterPriority = context?.let { ArrayAdapter(it, R.layout.list_item, priorities) }
         (habitPriorityInputLayout.editText as? AutoCompleteTextView)?.setAdapter(adapterPriority)

@@ -46,4 +46,26 @@
     <string name="deleting_habbit">Deleting Habit</string>
     <string name="done">Done</string>
     <string name="You_should_do_this_habbit_toast">You should do this habit </string>
+
+    <string-array name="priorities">
+        <item>Priority is not selected</item>
+        <item>Low</item>
+        <item>High</item>
+    </string-array>
+
+    <string-array name="periods">
+        <item>Per hour</item>
+        <item>Per day</item>
+        <item>Per week</item>
+        <item>Per month</item>
+        <item>Per year</item>
+    </string-array>
+
+    <string-array name="filterTypes">
+        <item>By priority</item>
+        <item>By period</item>
+        <item>By quantity</item>
+        <item>By date</item>
+        <item>Without filter</item>
+    </string-array>
 </resources>

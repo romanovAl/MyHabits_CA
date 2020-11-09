@@ -45,4 +45,26 @@
     <string name="deleting_habbit">Удаление привычки</string>
     <string name="done">Я сделяль</string>
     <string name="You_should_do_this_habbit_toast">Вам стоит выполнить эту привычку еще</string>
+
+    <string-array name="priorities">
+        <item>Приоритет не выбран</item>
+        <item>Низкий</item>
+        <item>Высокий</item>
+    </string-array>
+
+    <string-array name="periods">
+        <item>В час</item>
+        <item>В день</item>
+        <item>В неделю</item>
+        <item>В месяц</item>
+        <item>В год</item>
+    </string-array>
+
+    <string-array name="filterTypes">
+        <item>По приоритету</item>
+        <item>По периоду</item>
+        <item>По количеству</item>
+        <item>По дате</item>
+        <item>Без фильтра</item>
+    </string-array>
 </resources>

@@ -122,7 +122,7 @@ class MainFragment : DaggerFragment(R.layout.fragment_main) {
             tab.text = tabNames[position]
         }.attach()
 
-        val filterTypes = Lists.getFilterTypes(requireContext())
+        val filterTypes = resources.getStringArray(R.array.filterTypes)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 

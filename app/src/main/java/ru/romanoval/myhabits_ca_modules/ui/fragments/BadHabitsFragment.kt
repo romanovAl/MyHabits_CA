@@ -37,8 +37,6 @@ class BadHabitsFragment : DaggerFragment(R.layout.fragment_bad_habits) {
 
     private fun init(){
 
-        val filterTypes = Lists.getFilterTypes(requireContext())
-
         progressBarBad.visibility = View.VISIBLE
         recyclerBadHabits.visibility = View.INVISIBLE
 
@@ -47,7 +45,7 @@ class BadHabitsFragment : DaggerFragment(R.layout.fragment_bad_habits) {
         var habitFromAdapter: Habit? = null
 
         adapter = RecyclerAdapter(emptyList(), requireContext()) { habit ->
-            viewModel.addDoneTimes(habit, Lists.getPeriods(requireContext()))
+            viewModel.addDoneTimes(habit, resources.getStringArray(R.array.periods).toList())
             habitFromAdapter = habit
         }
         recyclerBadHabits.adapter = adapter
@@ -76,7 +74,7 @@ class BadHabitsFragment : DaggerFragment(R.layout.fragment_bad_habits) {
                 Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
                     .setAction("Undo") {
                         if(habitFromAdapter != null){
-                            viewModel.removeLastDoneTimes(habitFromAdapter!!, Lists.getPeriods(requireContext()) )
+                            viewModel.removeLastDoneTimes(habitFromAdapter!!, resources.getStringArray(R.array.periods).toList())
                         }
                     }.show()
             }
